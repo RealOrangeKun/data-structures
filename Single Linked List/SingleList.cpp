@@ -10,9 +10,10 @@ SingleList<T>::SingleList() {
 
 template <class T>
 SingleList<T>::SingleList(const SingleList<T> &list) {
+    head = nullptr;
     Node *temp = list.head;
     while (temp) {
-        insert(temp->data);
+        insert_back(temp->data);
         temp = temp->next;
     }
 }
@@ -25,7 +26,7 @@ SingleList<T>::SingleList(T data) {
 
 template <class T>
 SingleList<T>::~SingleList() {
-    if(!head) return;
+    if (!head) return;
     Node *temp = head;
     while (temp) {
         Node *curr = temp;
@@ -36,17 +37,54 @@ SingleList<T>::~SingleList() {
 }
 
 template <class T>
-void SingleList<T>::insert(T data) {
+void SingleList<T>::insert_back(T data) {
     Node *newNode = new Node(data, nullptr);
     if (!head) {
         head = newNode;
     } else {
         Node *temp = head;
-        while (temp->next != nullptr) {
+        while (temp->next) {
             temp = temp->next;
         }
         temp->next = newNode;
     }
+}
+
+template <class T>
+void SingleList<T>::insert_front(T data) {
+    if (!head) {
+        insert_back(data);
+    }
+    Node *newNode = new Node(data, head);
+    head = newNode;
+}
+template <class T>
+void SingleList<T>::insert_at(T data, int position) {
+    int cnt = 0;
+    Node *current = head;
+    while (cnt != position - 1) {
+        current = current->next;
+        cnt++;
+    }
+    Node *newNode = new Node(data, current->next);
+    current->next = newNode;
+}
+
+template <class T>
+void SingleList<T>::delete_at(int position) {
+    if (!head) {
+        throw out_of_range("List is empty");
+    }
+    int cnt = 0;
+    Node *current = head;
+    while (cnt != position - 1) {
+        current = current->next;
+        cnt++;
+    }
+    Node *temp = current->next;
+    current->next = current->next->next;
+    temp->next = nullptr;
+    delete temp;
 }
 
 template <class T>
@@ -62,9 +100,26 @@ void SingleList<T>::display() {
     delete current;
 }
 
-template<class T>
-bool SingleList<T>::empty(){
+template <class T>
+bool SingleList<T>::empty() {
     return !head;
+}
+
+template <class T>
+void SingleList<T>::reverse() {
+    if (!head) {
+        throw out_of_range("List is empty");
+    }
+    Node *
+        prev,
+        *curr = head, *next_node;
+    while (curr) {
+        next_node = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next_node;
+    }
+    head = prev;
 }
 
 template <class T>
@@ -99,7 +154,7 @@ T SingleList<T>::pop_front() {
         head = nullptr;
         return data;
     }
-    Node* temp = head;
+    Node *temp = head;
     T data = head->data;
     head = head->next;
     delete temp;
@@ -114,9 +169,7 @@ bool SingleList<T>::operator==(const SingleList<T> &other) const {
         list1_pointer = list1_pointer->next;
         list2_pointer = list2_pointer->next;
     }
-    delete list1_pointer;
-    delete list2_pointer;
-    return true;
+    return !list1_pointer && !list2_pointer;
 }
 
 template <class T>
@@ -132,10 +185,9 @@ SingleList<T> &SingleList<T>::operator=(const SingleList<T> &other) {
 
         Node *temp = other.head;
         while (temp) {
-            insert(temp->data);
+            insert_back(temp->data);
             temp = temp->next;
         }
     }
     return *this;
 }
-
