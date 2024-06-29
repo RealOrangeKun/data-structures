@@ -16,9 +16,13 @@ class SingleList {
     SingleList(const SingleList &);
     SingleList(T);
     ~SingleList();
-    void insert(T);
+    void insert_back(T);
+    void insert_front(T);
+    void insert_at(T, int);
+    void delete_at(int);
     void display();
     bool empty();
+    void reverse();
     T pop_back();
     T pop_front();
     bool operator==(const SingleList &) const;
