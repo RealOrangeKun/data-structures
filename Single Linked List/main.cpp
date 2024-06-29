@@ -1,68 +1,76 @@
 #include "SingleList.h"
 #include <iostream>
-
 using namespace std;
 
 int main() {
-    // Test default constructor
-    SingleList<int> list1;
-    cout << "Is list1 empty: ";
-    cout << list1.empty() << endl;
+    SingleList<int> list;
 
-    // Test constructor with initial value
-    SingleList<int> list2(10);
-    cout << "List2 after constructor with initial value (10): ";
-    list2.display();
+    // Test insert_back
+    list.insert_back(1);
+    list.insert_back(2);
+    list.insert_back(3);
+    cout << "List after insert_back: ";
+    list.display(); // Expected output: 1 2 3
     cout << endl;
 
-    // Test copy constructor
-    list1.insert(1);
-    list1.insert(2);
-    list1.insert(3);
-    SingleList<int> list3(list1);
-    cout << "List3 after copy constructor from List1: ";
-    list3.display();
+    // Test insert_front
+    list.insert_front(0);
+    cout << "List after insert_front: ";
+    list.display(); // Expected output: 0 1 2 3
     cout << endl;
 
+    // Test insert_at
+    list.insert_at(5, 2);
+    cout << "List after insert_at position 2: ";
+    list.display(); // Expected output: 0 1 5 2 3
+    cout << endl;
 
-    // Test insert and display
-    list1.insert(4);
-    list1.insert(5);
-    cout << "List1 after insertions: ";
-    list1.display();
+    // Test delete_at
+    list.delete_at(2);
+    cout << "List after delete_at position 2: ";
+    list.display(); // Expected output: 0 1 2 3
+    cout << endl;
+
+    // Test reverse
+    list.reverse();
+    cout << "List after reverse: ";
+    list.display(); // Expected output: 3 2 1 0
     cout << endl;
 
     // Test pop_back
-    try {
-        int popped_value = list1.pop_back();
-        cout << "Popped value from back: " << popped_value << endl;
-        cout << "List1 after pop_back: ";
-        list1.display();
-        cout << endl;
-    } catch (const std::out_of_range& e) {
-        std::cerr << "Exception caught: " << e.what() << endl;
-    }
-
-    // Test pop_front
-    try {
-        int popped_value = list1.pop_front();
-        cout << "Popped value from front: " << popped_value << endl;
-        cout << "List1 after pop_front: ";
-        list1.display();
-        cout << endl;
-    } catch (const std::out_of_range& e) {
-        std::cerr << "Exception caught: " << e.what() << endl;
-    }
-
-    // Test assignment operator
-    SingleList<int> list5;
-    list5 = list1;
-    cout << "List5 after assignment from List1: ";
-    list5.display();
+    int popBack = list.pop_back();
+    cout << "Popped from back: " << popBack << endl; // Expected output: 3
+    cout << "List after pop_back: ";
+    list.display(); // Expected output: 2 1 0
     cout << endl;
 
-    // Test operator==
-    cout << "List1 equals List5? " << (list1 == list5) << endl;
+    // Test pop_front
+    int popFront = list.pop_front();
+    cout << "Popped from front: " << popFront << endl; // Expected output: 2
+    cout << "List after pop_front: ";
+    list.display(); // Expected output: 1 0
+    cout << endl;
+
+    // Test empty
+    cout << "Is list empty? " << (list.empty() ? "Yes" : "No") << endl; // Expected output: No
+
+    // Test copy constructor
+    SingleList<int> list2(list);
+    cout << "Copied list using copy constructor: ";
+    list2.display(); // Expected output: 1 0
+    cout << endl;
+
+    // Test assignment operator
+    SingleList<int> list3;
+    list3 = list;
+    cout << "Copied list using assignment operator: ";
+    list3.display(); // Expected output: 1 0
+    cout << endl;
+
+    // Test equality operator
+    cout << "Are list and list2 equal? " << (list == list2 ? "Yes" : "No") << endl; // Expected output: Yes
+    list.insert_back(4);
+    cout << "Are list and list2 equal after modifying list2? " << (list == list2 ? "Yes" : "No") << endl; // Expected output: No
 
     return 0;
 }
