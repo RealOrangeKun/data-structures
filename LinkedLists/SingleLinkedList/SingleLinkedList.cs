@@ -1,6 +1,6 @@
-﻿using System.Collections;
+using System.Collections;
 
-namespace SingleLinkedList;
+namespace LinkedLists.SingleLinkedList;
 
 public class SingleLinkedList<T> : IEnumerable<T>
 {

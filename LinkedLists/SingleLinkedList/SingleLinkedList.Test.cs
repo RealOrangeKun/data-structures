@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace SingleLinkedList;
+namespace LinkedLists.SingleLinkedList;
 
 public class SingleLinkedListTests
 {
@@ -183,4 +183,3 @@ public class SingleLinkedListTests
         Assert.False(list.Contains(2));
     }
 }
-
