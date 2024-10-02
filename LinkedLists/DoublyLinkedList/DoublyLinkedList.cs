@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace LinkedLists.DoublyLinkedList;
 
-public class DoublyLinkedList<T> : ILinkedList<T>
+public class DoublyLinkedList<T> : ILinkedList<T>, IEnumerable<T>
 {
     private Node<T>? Head { get; set; }
     public int Length { get; private set; }

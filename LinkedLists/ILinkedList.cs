@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LinkedLists
 {
-    public interface ILinkedList<T> : IEnumerable<T>
+    public interface ILinkedList<T>
     {
         void PushBack(T value);
         void PushFront(T value);

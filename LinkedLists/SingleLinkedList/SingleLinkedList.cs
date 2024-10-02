@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace LinkedLists.SingleLinkedList;
 
-public class SingleLinkedList<T> : ILinkedList<T>
+public class SingleLinkedList<T> : ILinkedList<T>, IEnumerable<T>
 {
     private Node<T>? Head { get; set; }
     public int Length { get; private set; } = 0;
