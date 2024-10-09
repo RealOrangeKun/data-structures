@@ -5,7 +5,7 @@ namespace PriorityQueue;
 
 public class PriorityQueue<T>(Priority priority) : IPriorityQueue<T>, IEnumerable<T> where T : IComparable
 {
-    private Heap<T> _heap = new(priority == Priority.Maximum ? HeapType.MaxHeap : HeapType.MinHeap);
+    private readonly Heap<T> _heap = new(priority == Priority.Maximum ? HeapType.MaxHeap : HeapType.MinHeap);
     public int Count => _heap.Count;
     public void Clear()
     {

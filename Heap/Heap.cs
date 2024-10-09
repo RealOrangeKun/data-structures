@@ -20,9 +20,8 @@ public class Heap<T>(HeapType heapType) : IHeap<T>, IEnumerable<T> where T : ICo
         if (Count == _items.Length)
             Resize();
         _items[Count] = element;
-        HeapifyUp(Count);
+        SwimUp(Count);
         Count++;
-
     }
     private void Resize()
     {
@@ -51,7 +50,7 @@ public class Heap<T>(HeapType heapType) : IHeap<T>, IEnumerable<T> where T : ICo
         T item = _items[0];
         _items[0] = _items[Count - 1];
         Count--;
-        HeapifyDown(0);
+        SwimDown(0);
         return item;
     }
 
@@ -59,7 +58,7 @@ public class Heap<T>(HeapType heapType) : IHeap<T>, IEnumerable<T> where T : ICo
     {
         return GetEnumerator();
     }
-    private void HeapifyUp(int index)
+    private void SwimUp(int index)
     {
         int parentIndex = Heap<T>.GetParentIndex(index);
         bool condition = _heapType == HeapType.MinHeap ? _items[index].CompareTo(_items[parentIndex]) < 0
@@ -67,10 +66,10 @@ public class Heap<T>(HeapType heapType) : IHeap<T>, IEnumerable<T> where T : ICo
         if (index > 0 && condition)
         {
             Swap(index, parentIndex);
-            HeapifyUp(parentIndex);
+            SwimUp(parentIndex);
         }
     }
-    private void HeapifyDown(int index)
+    private void SwimDown(int index)
     {
         int leftChildIndex = Heap<T>.GetLeftChildIndex(index);
         int rightChildIndex = Heap<T>.GetRightChildIndex(index);
@@ -102,7 +101,7 @@ public class Heap<T>(HeapType heapType) : IHeap<T>, IEnumerable<T> where T : ICo
         if (targetIndex != index)
         {
             Swap(index, targetIndex);
-            HeapifyDown(targetIndex);
+            SwimDown(targetIndex);
         }
     }
     private static int GetParentIndex(int index)
