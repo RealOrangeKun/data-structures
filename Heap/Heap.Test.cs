@@ -134,5 +134,56 @@ namespace Heap
             Assert.Equal(1, heap.Remove());
             Assert.Equal(1, heap.Remove());
         }
+
+        [Fact]
+        public void RemoveAt_ValidIndex_RemovesElementAndMaintainsHeap()
+        {
+            var heap = new Heap<int>(HeapType.MinHeap);
+            heap.Insert(3);
+            heap.Insert(5);
+            heap.Insert(1);
+            heap.Insert(4);
+
+            // Arrange
+            int indexToRemove = 1; // Assuming that 5 is at index 1
+
+            // Act
+            int removedItem = heap.RemoveAt(indexToRemove);
+
+            // Assert
+            Assert.Equal(4, removedItem); // Verify the removed item
+        }
+
+        [Fact]
+        public void RemoveAt_InvalidIndex_ThrowsArgumentOutOfRangeException()
+        {
+            // Arrange
+            var heap = new Heap<int>(HeapType.MinHeap);
+            heap.Insert(3);
+            heap.Insert(5);
+            heap.Insert(1);
+            heap.Insert(4);
+
+            int invalidIndex = 10; // Out of bounds index
+
+            // Act & Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => heap.RemoveAt(invalidIndex));
+        }
+
+        [Fact]
+        public void RemoveAt_NegativeIndex_ThrowsArgumentOutOfRangeException()
+        {
+            // Arrange
+            var heap = new Heap<int>(HeapType.MinHeap);
+            heap.Insert(3);
+            heap.Insert(5);
+            heap.Insert(1);
+            heap.Insert(4);
+
+            int negativeIndex = -1;
+
+            // Act & Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => heap.RemoveAt(negativeIndex));
+        }
     }
 }

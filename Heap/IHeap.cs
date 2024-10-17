@@ -12,5 +12,7 @@ namespace Heap
         T Peek();
         bool IsEmpty();
         void Clear();
+        T PeekAt(int index);
+        void UpdateAt(int index, T item);
     }
 }

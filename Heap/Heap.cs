@@ -126,4 +126,30 @@ public class Heap<T>(HeapType heapType) : IHeap<T>, IEnumerable<T> where T : ICo
         _items = new T[16];
         Count = 0;
     }
+
+    public T PeekAt(int index)
+    {
+        if (index < 0 || index >= Count)
+            throw new ArgumentOutOfRangeException(nameof(index));
+        return _items[index];
+    }
+    public T RemoveAt(int index)
+    {
+        if (index < 0 || index >= Count)
+            throw new ArgumentOutOfRangeException(nameof(index));
+        T item = _items[index];
+        _items[index] = _items[Count - 1];
+        Count--;
+        SwimDown(index);
+        return item;
+    }
+    public void UpdateAt(int index, T item)
+    {
+        if (index < 0 || index >= Count)
+            throw new ArgumentOutOfRangeException(nameof(index));
+
+        RemoveAt(index);
+        Insert(item);
+    }
+
 }
