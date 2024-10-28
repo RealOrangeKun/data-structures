@@ -20,7 +20,7 @@ public class SegmentTree<T> where T : struct
         int mid = (start + end) / 2;
         Build(arr, GetLeftChildIndex(node), start, mid);
         Build(arr, GetRightChildIndex(node), mid + 1, end);
-        _tree[node] = (dynamic)_tree[GetLeftChildIndex(node)] + (dynamic)_tree[GetRightChildIndex(node)];
+        _tree[node] = Combine(_tree[GetLeftChildIndex(node)], _tree[GetRightChildIndex(node)]);
 
     }
     private static int GetLeftChildIndex(int index) => 2 * index + 1;
@@ -40,7 +40,7 @@ public class SegmentTree<T> where T : struct
             updated = Update(GetLeftChildIndex(node), start, mid, index, value);
         else
             updated = Update(GetRightChildIndex(node), mid + 1, end, index, value);
-        _tree[node] = Add(_tree[GetLeftChildIndex(node)], _tree[GetRightChildIndex(node)]);
+        _tree[node] = Combine(_tree[GetLeftChildIndex(node)], _tree[GetRightChildIndex(node)]);
         return updated;
     }
     public T Query(int left, int right) => Query(0, 0, _n - 1, left, right);
@@ -53,7 +53,7 @@ public class SegmentTree<T> where T : struct
         int mid = (start + end) / 2;
         T leftResult = Query(GetLeftChildIndex(node), start, mid, left, right);
         T rightResult = Query(GetRightChildIndex(node), mid + 1, end, left, right);
-        return Add(leftResult, rightResult);
+        return Combine(leftResult, rightResult);
     }
-    private static T Add(T a, T b) => (dynamic)a + (dynamic)b;
+    private static T Combine(T a, T b) => (dynamic)a + (dynamic)b;
 }
